@@ -1,0 +1,75 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<div class="pb-4 pt-5 text-center"> 
+    <h2>Add Order</h2>
+    <p class="lead">Place a new order.</p>
+</div>
+{% comment %} <div class="dropdown">
+    <div class="dropdown-menu show" aria-labelledby="dLabel">
+        <a class="dropdown-item" href="#">Products</a>
+        <a class="dropdown-item" href="#">Clients</a>
+        <a class="dropdown-item" href="#">Orders</a>
+    </div>
+</div> {% endcomment %}
+
+<div class = 'row'>
+    <div class = 'col'>
+        <div style = "">
+            <form id = 'form' method="post" action="/add_order/" autocomplete="off">
+                {% csrf_token %}
+                <h4 class="mb-3">Cient Information</h4>
+                {{ Add_Order }}
+                <hr class="my-2">
+                <div class = "" >
+                    <h4 class="mb-3">Order</h4>
+                    {{ OrderProductFormSet.management_form }}
+                    <table id='formset-table'>
+                        
+                    </table>
+                    <div class= 'px-3 py-2 row'>
+                        <button id='add-more' type ='button' class="btn btn-success"><i class="bi-plus-lg"></i></button>               
+                    </div>
+                </div>
+                <button type ='submit' name='agregar' id = 'id_submit' class="btn mt-3 btn-dark btn-lg btn-block">Add Order</button>
+            </form>
+            <div id = 'empty-form' hidden>
+                <div class = "row">
+                    <div class="col fieldWrapper">
+                        {{ OrderProductFormSet.empty_form.product.errors }}
+                        <label for="{{  OrderProductFormSet.empty_form.product.id_for_label }}">Product:</label>
+                    </div>
+                    <div class="col fieldWrapper">
+                        {{  OrderProductFormSet.empty_form.quantity.errors }}
+                        <label for="{{  OrderProductFormSet.empty_form.quantity.id_for_label }}">Quantity:</label>
+                    </div>
+                    <button hidden class="btn btn-success add-form-row">+</button>
+                </div>
+                <div class = "row">
+                    {{  OrderProductFormSet.empty_form.non_field_errors }}
+                    <div class="col fieldWrapper">
+                        {{  OrderProductFormSet.empty_form.product }}
+                    </div>
+                    <div class="col fieldWrapper">
+                        {{  OrderProductFormSet.empty_form.quantity }}
+                    </div>
+                    <button id = 'remove' type ='button' class="btn btn-danger"><i class="bi-trash-fill"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  class = 'col'>
+        <div class='m-4 text-center shadow'>
+            <iframe width="400" height="300" style="border:0" loading="lazy" allowfullscreen
+            src="https://www.google.com/maps/embed/v1/place?key={{os.environ['GoogleAPIKey']}}
+                &q=Medellin">
+            </iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+{% load static %}  
+<script src="//maps.googleapis.com/maps/api/js?\key={{os.environ['GoogleAPIKey']}}&libraries=places&callback=initAutocomplete" async defer></script>
+<script src="{% static 'js/add_order.js' %}"></script>   
+
+{% endblock %}
