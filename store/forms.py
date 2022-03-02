@@ -16,22 +16,26 @@ class Add_Client(forms.ModelForm):
 class Add_Order(forms.Form):    
     #Order
     client_name = forms.CharField(max_length=30, required=True)
-    address = forms.CharField(max_length=30, required=True)
-    #product = forms.CharField(max_length=30, required=True)
-    #quantity = forms.IntegerField(required=True)
+    place_id = forms.CharField(max_length=500, required=True, widget=forms.HiddenInput())
+    place_address = forms.CharField(max_length=500, required=True, widget=forms.HiddenInput())
+    place_name = forms.CharField(max_length=500, required=True)
+
     
     def save(self):
         name = self.cleaned_data.get("client_name")
-        address = self.cleaned_data.get("address")
-        
+        place_id = self.cleaned_data.get("place_id")
+        place_name = self.cleaned_data.get("place_name")
+        place_address = self.cleaned_data.get("place_address")
         try:
             client = Client.objects.get(
                 name = name,
-                address = address)
+                place_id = place_id)
         except Client.DoesNotExist:
             client = Client(
                 name = name,
-                address = address)
+                place_id = place_id,
+                place_name = place_name,
+                place_address = place_address)
             client.save()
         order = Order(client=client)
         order.save()

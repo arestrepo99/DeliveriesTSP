@@ -10,18 +10,17 @@ def add_order(request):
         data = request.POST
         order = Add_Order(data)
         orderProductFormSet = OrderProductFormSet(data)
+        print(order)
         if order.is_valid() and orderProductFormSet.is_valid():
-            print(order)
             order_object = order.save()
             for orderProduct in orderProductFormSet:
                 if orderProduct.is_valid():
-                    print("AAAAAAA")
                     to_save = orderProduct.save(commit=False)
                     to_save.order = order_object
                     to_save.save()
     return render(request, "store/add_order.html", 
         {"Add_Order": Add_Order, "OrderProductFormSet" : OrderProductFormSet, 
-            'GoogleAPIKey': os.environ['GoogleAPIKey']})
+            'MapsJavaScirptAPIKey' : os.environ['MapsJavaScirptAPIKey']})
 
 def dashboard(request):
     if request.method == "POST":

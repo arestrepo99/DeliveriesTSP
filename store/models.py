@@ -12,9 +12,12 @@ class Product(models.Model):
 
 class Client(models.Model):
     name = models.CharField(max_length=30)
-    address = models.CharField(max_length=30)
+    place_id = models.CharField(max_length=500)
+    place_name = models.CharField(max_length=500, default='')
+    place_address = models.CharField(max_length=500, default='')
+
     def __str__(self):
-        return f'{str(self.name)}, {str(self.address)}'
+        return f'{str(self.name)}, Name: {str(self.place_name)}, Address: {self.place_address}'
     
     def to_html(self):
         return self.__str__()
@@ -48,6 +51,10 @@ class OrderProduct(models.Model):
     
     def to_html(self):
         return self.__str__()
+
+class GoogleMapsApiRequest(models.Model):
+    pass
+    
 
 # product1 = Product.objects.create()
 # product2 = Product.objects.create()
