@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core import serializers
 from .forms import Add_Client, Add_Order, OrderProductFormSet, Add_Product
 from .models import Product, Client, Order
-
+import os
 
 def add_order(request):
     if request.method == "POST":
@@ -20,7 +20,8 @@ def add_order(request):
                     to_save.order = order_object
                     to_save.save()
     return render(request, "store/add_order.html", 
-        {"Add_Order": Add_Order, "OrderProductFormSet" : OrderProductFormSet})
+        {"Add_Order": Add_Order, "OrderProductFormSet" : OrderProductFormSet, 
+            'GoogleAPIKey': os.environ['GoogleAPIKey']})
 
 def dashboard(request):
     if request.method == "POST":

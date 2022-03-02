@@ -1,5 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # Create your views here.
 
 def home(request):
-    return render(request, "main/main.html")
+    return redirect('add_order/')#render(request, "main/main.html")

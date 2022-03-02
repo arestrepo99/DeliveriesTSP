@@ -21,7 +21,7 @@ from store.views import dashboard, add_order, edit_products, edit_clients,edit_o
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('dashboard/', dashboard),
+    #path('dashboard/', dashboard),
     path('add_order/', add_order),
     path('edit/products', edit_products),
     path('edit/clients', edit_clients),
